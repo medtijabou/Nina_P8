@@ -199,24 +199,24 @@
       gallery.append(`<div class="modal fade" id="${
         lightboxId ? lightboxId : "galleryLightbox"
       }" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            ${
-                              navigation
-                                ? '<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;"><</div>'
-                                : '<span style="display:none;" />'
-                            }
-                            <img class="lightboxImage img-fluid" alt="Contenu de l'image affichée dans la modale au clique"/>
-                            ${
-                              navigation
-                                ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;}">></div>'
-                                : '<span style="display:none;" />'
-                            }
-                        </div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        ${
+                          navigation
+                            ? '<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;">&#10094;</div>'
+                            : '<span style="display:none;" />'
+                        }
+                        <img class="lightboxImage img-fluid" alt="Image affichée en plein écran"/>
+                        ${
+                          navigation
+                            ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;">&#10095;</div>'
+                            : '<span style="display:none;" />'
+                        }
                     </div>
                 </div>
-            </div>`);
+            </div>
+        </div>`);
     },
     showItemTags(gallery, position, tags) {
       var tagItems =
@@ -237,27 +237,23 @@
     },
     filterByTag() {
       if ($(this).hasClass("active-tag")) {
-        return;
+          return;
       }
       $(".active.active-tag").removeClass("active active-tag");
       $(this).addClass("active-tag active");
-
+  
       var tag = $(this).data("images-toggle");
-
+  
       $(".gallery-item").each(function() {
-        $(this)
-          .parents(".item-column")
-          .hide();
-        if (tag === "all") {
-          $(this)
-            .parents(".item-column")
-            .show(300);
-        } else if ($(this).data("gallery-tag") === tag) {
-          $(this)
-            .parents(".item-column")
-            .show(300);
-        }
+          var parentColumn = $(this).parents(".item-column");
+  
+          if (tag === "all" || $(this).data("gallery-tag") === tag) {
+              parentColumn.fadeIn(300);
+          } else {
+              parentColumn.fadeOut(300);
+          }
       });
-    }
+  }
+  
   };
 })(jQuery);
